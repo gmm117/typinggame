@@ -4,33 +4,17 @@ const REMAIN_TIME_ID = 'remaintime';
 const SCORE_ID = 'score';
 const START_BTN_ID = 'startbtn';
 const INPUT_WORD_ID = 'inputword';
+const PROBLEM_WORD_ID = 'problemword';
 
 let domHandler;
 
-export function RenderHtml( ) {
-    return `
-        <div class="rd_header">
-            <div>
-                <div>남은 시간 :&nbsp;</div>
-                <div id="remaintime"></div>
-                <div>초</div>
-            </div>
-            <div>
-                <div>점수 :&nbsp;</div>
-                <div id="score"></div>
-                <div>점</div>
-            </div>
-        </div>
-        <div class="rd_content"> 
-            <div class="rd_problemword">문제 단어</div>
-            <input id="inputword" type="text" class="rd_word" placeholder="입력" autocomplete="off" />
-            <div id="startbtn" class="contentbtn" style="width: 130px; height: 30px;">시작</div>
-        </div>
-    `;
+export function RenderHtml(html) {
+    const root = document.getElementById('root');
+    root.innerHTML = html;
 }
 
 function _getDomHandler() {
-    let remaintime, score, startbtn, inputword;
+    let remaintime, score, startbtn, inputword, problemword;
     return function(id) {
       switch(id) {
           case REMAIN_TIME_ID:
@@ -41,6 +25,8 @@ function _getDomHandler() {
             return startbtn ? startbtn : document.getElementById(START_BTN_ID);
           case INPUT_WORD_ID:
             return inputword ? inputword : document.getElementById(INPUT_WORD_ID);
+          case PROBLEM_WORD_ID:
+            return problemword ? problemword : document.getElementById(PROBLEM_WORD_ID);
           default:
             return null;
       }
@@ -58,6 +44,13 @@ export function RenderScore( _score ) {
     const score = domHandler("score");
     if(score) {
         score.innerText = _score;
+    }
+}
+
+export function RenderText( _text ) {
+    const problemword = domHandler("problemword");
+    if(problemword) {
+        problemword.innerText = _text === undefined ? "문제 단어" : _text;
     }
 }
 

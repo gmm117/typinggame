@@ -1,19 +1,13 @@
 import { RenderHtml, InitEvent  } from "../view/ResultView";
 
-let userlistner;
-
-function _init( _userlistner, root ) {
-    if(userlistner === undefined)
-        userlistner = _userlistner;
-
-    root.innerHTML = RenderHtml(_userlistner.GetScore(), _userlistner.GetAvgTime());
-    InitEvent(_onRestart);
+function _init( _userlistner, html ) {
+    RenderHtml(html);
+    InitEvent(_onRestart, _userlistner.GetMatchLength(), _userlistner.GetAvgTime());
 }
 
 function _onRestart() {
-    userlistner.InitReady();
+    userlistner.ChangeReady();
 }
-
 
 export default {
     Init : _init

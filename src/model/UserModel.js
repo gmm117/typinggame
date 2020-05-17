@@ -8,7 +8,7 @@ function _getTotalTime() {
     return UserDatas.reduce((acc, { second }) => acc + second, 0);
 };
 
-function _getMatchLength( ) {
+export function GetMatchLength( ) {
     return UserDatas.filter( item => item.match === true ).length;
 };
 
@@ -72,5 +72,9 @@ export function GetLength() {
 };
 
 export function GetAvgTime() {
-    return parseInt(_getTotalTime() / _getMatchLength(), 10);
+    if(_getTotalTime() <= 0 || GetMatchLength() <= 0) {
+        return 0;
+    }
+
+    return parseInt(_getTotalTime() / GetMatchLength(), 10);
 };

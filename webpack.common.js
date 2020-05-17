@@ -3,6 +3,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MinifyHtmlWebpackPlugin = require('minify-html-webpack-plugin');
 
 module.exports = {
   // entry file
@@ -46,13 +48,31 @@ module.exports = {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template :  path.resolve(__dirname, 'public', 'index.html'),
+      title : 'Typing Game',
       filename: 'index.html', // output으로 출력할 파일은 index.html 이다.
+      template :  path.resolve(__dirname, 'public', 'index.html')
     }),
     new MiniCssExtractPlugin({
       filename: '[hash].css'
     }),
     new OptimizeCSSAssetsPlugin({}),
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          context: path.resolve(__dirname, 'public/subhtml'),
+          from: '**/*.html',
+        }
+      ]
+    }),
+    new MinifyHtmlWebpackPlugin({
+      src: './dist',
+      rules: {
+          collapseWhitespace: true,
+          removeAttributeQuotes: true,
+          removeComments: true,
+          minifyJS: true,
+      }
+    })
   ]
 };

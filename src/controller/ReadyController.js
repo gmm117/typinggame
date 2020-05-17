@@ -1,4 +1,4 @@
-import { RenderHtml, InitEvent, RenderTime, RenderScore, RenderBtn, ResetInput } from "../view/ReadyView";
+import { RenderHtml, InitEvent, RenderTime, RenderScore, RenderBtn, ResetInput, RenderText } from "../view/ReadyView";
 
 let userlistner;
 let bStartBtn = true;
@@ -8,6 +8,7 @@ let curTimeout = 0;
 function _reset() {
     ResetInput();
     RenderScore(userlistner.GetScore());
+    RenderText();
     if(userlistner.GetLength() > 0) {
         RenderTime(userlistner.GetTime(0));
     }
@@ -33,21 +34,20 @@ function _onStart() {
 function _onCompare({ value }) {
     if(value === userlistner.GetText(curIdx)) {
         userlistner.SetMatch(curIdx, true);
+        ResetInput();
     } 
-
-    ResetInput();
 }
 
 function _onKeyBlock() {
     return bStartBtn;
 }
 
-function _init( _userlistner, root ) {
+function _init( _userlistner, html ) {
     if(userlistner === undefined)
         userlistner = _userlistner;
 
     if(_userlistner.GetLength() > 0) {
-        root.innerHTML = RenderHtml();
+        RenderHtml(html)
         InitEvent(_onStart, _onCompare, _onKeyBlock);
         _reset();
     }
@@ -56,6 +56,7 @@ function _init( _userlistner, root ) {
 function asyncIntervalCaller(_idx) {
     let second = userlistner.GetTime(_idx);
     userlistner.SetTime(_idx, second);
+    RenderText(userlistner.GetText(_idx));
     RenderTime(second);
     RenderScore(userlistner.GetScore());
 
@@ -69,6 +70,7 @@ function asyncIntervalCaller(_idx) {
                 window.clearInterval(curTimeout);
                 resolve();
             } else {
+                RenderText(userlistner.GetText(_idx));
                 userlistner.SetTime(_idx, --second);
                 RenderTime(second);
             }
@@ -85,7 +87,7 @@ async function _start() {
         await asyncIntervalCaller(i);
     }
 
-    userlistner.InitResult();
+    userlistner.ChangeResult();
 }
 
 
