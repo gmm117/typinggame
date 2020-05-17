@@ -5,11 +5,15 @@ export function InitServerData( serverData ) {
 
     for(const i in serverData) {
         const {second, text} = serverData[i];
-        ServerDatas.push({
-            idx: idx++,
-            second: second,
-            text: text
-        });
+        
+        if(ServerDatas.length < 5) {
+            ServerDatas.push({
+                idx: idx++,
+                second: second,
+                text: text
+            });
+        }
+        
     }
 
     return true;

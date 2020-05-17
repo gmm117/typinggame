@@ -3,7 +3,8 @@ import { RenderHtml, InitEvent  } from "../view/ResultView";
 let userlistner;
 
 function _init( _userlistner, root ) {
-    userlistner = _userlistner;
+    if(userlistner === undefined)
+        userlistner = _userlistner;
 
     root.innerHTML = RenderHtml(_userlistner.GetScore(), _userlistner.GetAvgTime());
     InitEvent(_onRestart);

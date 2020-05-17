@@ -8,6 +8,10 @@ function _getTotalTime() {
     return UserDatas.reduce((acc, { second }) => acc + second, 0);
 };
 
+function _getMatchLength( ) {
+    return UserDatas.filter( item => item.match === true ).length;
+};
+
 export function UserInit(serverDatas) {
     UserDatas = serverDatas.map(function(item) {
         return {
@@ -68,5 +72,5 @@ export function GetLength() {
 };
 
 export function GetAvgTime() {
-    return parseInt(_getTotalTime() / GetLength(), 10);
+    return parseInt(_getTotalTime() / _getMatchLength(), 10);
 };

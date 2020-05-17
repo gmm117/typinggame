@@ -11,7 +11,11 @@ function _reset() {
     if(userlistner.GetLength() > 0) {
         RenderTime(userlistner.GetTime(0));
     }
+
+    bStartBtn = true;
+    curIdx = 0;
     window.clearInterval(curTimeout);
+    curTimeout = 0;
 }
 
 function _onStart() {
@@ -34,12 +38,17 @@ function _onCompare({ value }) {
     ResetInput();
 }
 
+function _onKeyBlock() {
+    return bStartBtn;
+}
+
 function _init( _userlistner, root ) {
-    userlistner = _userlistner;
+    if(userlistner === undefined)
+        userlistner = _userlistner;
 
     if(_userlistner.GetLength() > 0) {
         root.innerHTML = RenderHtml();
-        InitEvent(_onStart, _onCompare);
+        InitEvent(_onStart, _onCompare, _onKeyBlock);
         _reset();
     }
 }
@@ -52,27 +61,26 @@ function asyncIntervalCaller(_idx) {
 
     return new Promise((resolve, reject) => {
         curTimeout = window.setInterval(function () {
-            userlistner.SetTime(_idx, second);
-            RenderTime(second);
-            if(second <= 0) {
-                userlistner.SetExpire(curIdx, true);
-                ResetInput();
-                window.clearInterval(curTimeout);
-                resolve(_idx);
-            } else if( userlistner.GetMatch(_idx) ) {
-                ResetInput();
-                window.clearInterval(curTimeout);
-                resolve(_idx);
-            }
+            if(second <= 0 || userlistner.GetMatch(_idx)) {
+                if(second <= 0)
+                    userlistner.SetExpire(_idx, true);
 
+                ResetInput();
+                window.clearInterval(curTimeout);
+                resolve();
+            } else {
+                userlistner.SetTime(_idx, --second);
+                RenderTime(second);
+            }
+            
             RenderScore(userlistner.GetScore());
-            second--;
+            
         }, 1000);
     });
 }
 
 async function _start() {
-    for(let i=0; i< 2; i++) {
+    for(let i=0; i< userlistner.GetLength(); i++) {
         curIdx = i;
         await asyncIntervalCaller(i);
     }

@@ -7,11 +7,3 @@ export function addEvent(element, eventName, cb, isCapture) {
         element["on" + eventName] = cb; 
     } 
 }
-
-export function asyncCaller( second, callback ) {
-    return new Promise((resolve, reject) => {
-        window.setTimeout(function () {
-            
-        }, 1000);
-    });
-}

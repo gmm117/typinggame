@@ -9,17 +9,10 @@ export function getURL(url) {
           if (req.status === 200) {
               resolve(req.response);
           } else { 
-              reject(req.statusText);
+              reject(req);
           }
         }
       };
     });
-};
-
-const routes = {
-    'home': function () {
-        get('/data/home.json')
-        .then(res => render(res));
-    }
 };
 

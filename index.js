@@ -3,5 +3,10 @@ import './public/index.css';
 import { init } from './src/presenter';
 
 
-init( document.getElementById("root") );
+try {
+    init( document.getElementById("root"), "https://my-json-server.typicode.com/kakaopay-fe/resources/words1" );
+} catch (e) {
+    console.error(e);
+}
+
 
