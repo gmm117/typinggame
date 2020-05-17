@@ -1,0 +1,123 @@
+html, body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.root {
+    width: 250px;
+    height: 200px;
+    box-sizing: border-box;
+}
+
+/* common css */
+
+.contentbtn {
+    width: 110px;
+    height: 30px;
+    background: #46A1F8;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 13px;
+
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+/* ready css */
+.rd_header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.rd_header div {
+    display: flex;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.rd_header div div {
+    display: flex;
+    flex-direction: column;
+}
+
+.rd_content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rd_content > * {
+    margin: 10px 0;
+}
+
+.rd_content .rd_problemword {
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.rd_content .rd_word {
+    width: 170px;
+    height: 30px;
+    background: #46A1F8;
+    color: white;
+    text-align: center;
+    border: 1px solid white;
+    border-radius: 15px;
+    outline: none;
+}
+
+.rd_content .rd_word::placeholder {
+    color: white;
+}
+
+/* result css */
+.rs_header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 17px;
+    font-weight: 800;
+    margin: 0 0 20px 0;
+}
+
+.rs_content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rs_content > * {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.rs_content > .c1 {
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.rs_content > .c2 {
+    display: flex;
+    font-size: 12px;
+    font-weight: 800;
+}
