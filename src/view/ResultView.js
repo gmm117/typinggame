@@ -5,7 +5,7 @@ export function RenderHtml( html ) {
     root.innerHTML = html;
 }
 
-export function InitEvent( OnRestart, score, avg ) {
+export function InitView( OnRestart, score, avg ) {
     const restartbtn = document.getElementById("restartbtn");
     if(restartbtn) {
         addEvent(restartbtn, "click", (e) => {

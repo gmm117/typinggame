@@ -1,35 +1,31 @@
-import route, { SetListener, ChangeUrl , READY_URL, RESULT_URL } from "./utils/route";
+import Route, { SetListener, ChangeUrl , READY_URL, RESULT_URL } from "./utils/route";
 import RDController from './controller/ReadyController';
 import RSController from './controller/ResultController';
 import { InitServerData, GetServerDatas } from "./model/ServerModel";
 import { UserInit, SetTime, GetTime, SetExpire, GetExpire, GetScore, GetText, GetLength, GetMatch, SetMatch, GetAvgTime, GetMatchLength } from "./model/UserModel";
 
-let userlistner;
+let presenterlistner;
 
 function _initReady(html) {
     UserInit(GetServerDatas());
 
-    RDController.Init(userlistner, html);
+    RDController.Init(presenterlistner, html);
 }
 
 function _initResult(html) {
-    RSController.Init(userlistner, html);
+    RSController.Init(presenterlistner, html);
 }
 
-function _changeUrl(url) {
-    ChangeUrl(url);
-}
-
-function _changeReady() {
+function _changeUrlReady() {
     return ChangeUrl(READY_URL);
 }
 
-function _changeResult() {
+function _changeUrlResult() {
     return ChangeUrl(RESULT_URL);
 }
 
 function Initialize() {
-    userlistner = { 
+    presenterlistner = { 
         Init: function() {
             UserInit(GetServerDatas());
         },
@@ -46,22 +42,22 @@ function Initialize() {
         GetMatchLength,
         InitReady: _initReady,
         InitResult: _initResult,
-        ChangeReady: _changeReady,
-        ChangeResult: _changeResult
+        ChangeUrlReady: _changeUrlReady,
+        ChangeUrlResult: _changeUrlResult
     };
 
-    SetListener(userlistner);
+    SetListener(presenterlistner);
 }
 
 export function init(url) {
-    route('/', url)
+    Route('/', url)
         .then(res => InitServerData(JSON.parse(res)))
         .then(function(res) {
             Initialize();
             if(location.hash === '#ready') {
-                route('/ready');
+                Route('/ready');
             } else {
-                _changeReady();
+                _changeUrlReady();
             }
         })
         .catch(res => alert("status : " + res.status + (res.responseURL ? "\n" + "responseURL : " + res.responseURL : "")));

@@ -1,30 +1,17 @@
-import { RenderHtml, InitEvent, RenderTime, RenderScore, RenderBtn, ResetInput, RenderText } from "../view/ReadyView";
+import { RenderHtml, RenderTime, RenderScore, RenderBtn, RenderResetInput, RenderText, InitView } from "../view/ReadyView";
+import RDModel from "../model/ReadyModel";
 
-let userlistner;
-let bStartBtn = true;
-let curIdx = 0;
-let curTimeout = 0;
-
-function _reset() {
-    ResetInput();
-    RenderScore(userlistner.GetScore());
-    RenderText();
-    if(userlistner.GetLength() > 0) {
-        RenderTime(userlistner.GetTime(0));
-    }
-
-    bStartBtn = true;
-    curIdx = 0;
-    window.clearInterval(curTimeout);
-    curTimeout = 0;
-}
+let presenterlistner;
 
 function _onStart() {
-    bStartBtn = !bStartBtn;
-    RenderBtn(bStartBtn);
-    userlistner.Init();
+    const { Init } =  presenterlistner;
+    const bStart = RDModel.GetStartFlag();
 
-    if(!bStartBtn) {
+    RDModel.SetStartFlag(!bStart);
+    RenderBtn(!bStart);
+    Init();
+
+    if(bStart) {
         _start();
     } else {
         _reset();
@@ -32,65 +19,90 @@ function _onStart() {
 }
 
 function _onCompare({ value }) {
-    if(value === userlistner.GetText(curIdx)) {
-        userlistner.SetMatch(curIdx, true);
-        ResetInput();
+    const { GetText, SetMatch } =  presenterlistner;
+    const idx = RDModel.GetCurIdx();
+    if(value === GetText(idx)) {
+        SetMatch(idx, true);
+        RenderResetInput();
     } 
 }
 
-function _onKeyBlock() {
-    return bStartBtn;
+async function _start() {
+    const { GetLength, ChangeUrlResult } =  presenterlistner;
+    for(let i=0; i< GetLength(); i++) {
+        RDModel.SetCurIdx(i);
+        await asyncIntervalCaller(i);
+    }
+
+    ChangeUrlResult();
 }
 
-function _init( _userlistner, html ) {
-    if(userlistner === undefined)
-        userlistner = _userlistner;
+function asyncIntervalCaller(_idx) {
+    const { GetTime, SetTime, GetText, GetScore, GetMatch, SetExpire } =  presenterlistner;
 
-    if(_userlistner.GetLength() > 0) {
-        RenderHtml(html)
-        InitEvent(_onStart, _onCompare, _onKeyBlock);
+    let second = GetTime(_idx);
+    SetTime(_idx, second);
+    RenderTime(second);
+    RenderText(GetText(_idx));
+    RenderScore(GetScore());
+
+    return new Promise((resolve, reject) => {
+        const timeid = window.setInterval(function () {
+            if(second <= 0 || GetMatch(_idx)) {
+                if(second <= 0)
+                    SetExpire(_idx, true);
+
+                RenderResetInput();
+                if(RDModel.GetCurTimeid() >= 0) 
+                    window.clearInterval(RDModel.GetCurTimeid());
+                    
+                resolve();
+            } else {
+                SetTime(_idx, --second);
+                RenderTime(second);
+                RenderText(GetText(_idx));
+            }
+            
+            RenderScore(GetScore());
+            
+        }, 1000);
+
+        RDModel.SetCurTimeid(timeid);
+    });
+}
+
+function _init( _presenterlistner, html ) {
+    if(presenterlistner === undefined)
+        presenterlistner = _presenterlistner;
+
+    const { GetLength } =  presenterlistner;
+    if(GetLength() > 0) {
+        RenderHtml(html);
+        InitView(_onStart, _onCompare, RDModel.OnKeyBlock);
         _reset();
     }
 }
 
-function asyncIntervalCaller(_idx) {
-    let second = userlistner.GetTime(_idx);
-    userlistner.SetTime(_idx, second);
-    RenderText(userlistner.GetText(_idx));
-    RenderTime(second);
-    RenderScore(userlistner.GetScore());
+function _reset() {
+    const { GetScore, GetLength, GetTime } =  presenterlistner;
 
-    return new Promise((resolve, reject) => {
-        curTimeout = window.setInterval(function () {
-            if(second <= 0 || userlistner.GetMatch(_idx)) {
-                if(second <= 0)
-                    userlistner.SetExpire(_idx, true);
-
-                ResetInput();
-                window.clearInterval(curTimeout);
-                resolve();
-            } else {
-                RenderText(userlistner.GetText(_idx));
-                userlistner.SetTime(_idx, --second);
-                RenderTime(second);
-            }
-            
-            RenderScore(userlistner.GetScore());
-            
-        }, 1000);
-    });
-}
-
-async function _start() {
-    for(let i=0; i< userlistner.GetLength(); i++) {
-        curIdx = i;
-        await asyncIntervalCaller(i);
+    RenderResetInput();
+    RenderScore(GetScore());
+    RenderText();
+    if(GetLength() > 0) {
+        RenderTime(GetTime(0));
     }
 
-    userlistner.ChangeResult();
+    RDModel.SetStartFlag(true);
+    RDModel.SetCurIdx(0);
+
+    if(RDModel.GetCurTimeid() >= 0) {
+        window.clearInterval(RDModel.GetCurTimeid());
+    }
+    RDModel.SetCurTimeid(0);
 }
 
 
 export default {
     Init : _init
-}
+};

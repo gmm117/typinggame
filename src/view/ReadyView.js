@@ -8,11 +8,6 @@ const PROBLEM_WORD_ID = 'problemword';
 
 let domHandler;
 
-export function RenderHtml(html) {
-    const root = document.getElementById('root');
-    root.innerHTML = html;
-}
-
 function _getDomHandler() {
     let remaintime, score, startbtn, inputword, problemword;
     return function(id) {
@@ -31,7 +26,44 @@ function _getDomHandler() {
             return null;
       }
     };
-  }
+}
+
+export function InitView( _onStart, _onCompare, _onKeyBlock ) {
+    const onClick = e => {
+        const inputword = domHandler('inputword');
+        inputword.focus();
+        _onStart();
+    };
+
+    const onKeyDown = e => {
+        if(_onKeyBlock()) {
+            e.preventDefault();
+        } else {
+            if(e.which === 13 || e.keycode === 13) {
+                _onCompare(e.target);
+            }
+        }
+    };
+
+    if(domHandler === undefined)
+        domHandler = _getDomHandler();
+
+    const startbtn = domHandler("startbtn");
+    if(startbtn) {
+        addEvent(startbtn, "click", onClick);
+    }
+
+    const inputword = domHandler('inputword');
+    if(inputword) {
+        addEvent(inputword, "keydown", onKeyDown);
+    }
+}
+
+
+export function RenderHtml(html) {
+    const root = document.getElementById('root');
+    root.innerHTML = html;
+}
 
 export function RenderTime( _remainTime ) {
     const remaintime = domHandler("remaintime");
@@ -61,38 +93,9 @@ export function RenderBtn( _bStartBtn ) {
     }
 }
 
-export function ResetInput( ) {
+export function RenderResetInput( ) {
     const inputword = domHandler("inputword");
     if(inputword) {
         inputword.value = "";
-    }
-}
-
-export function InitEvent( _onStart, _onCompare, _onKeyBlock ) {
-    const onClick = e => {
-        _onStart();
-    };
-
-    const onKeyDown = e => {
-        if(_onKeyBlock()) {
-            e.preventDefault();
-        } else {
-            if(e.which === 13 || e.keycode === 13) {
-                _onCompare(e.target);
-            }
-        }
-    }
-
-    if(domHandler === undefined)
-        domHandler = _getDomHandler();
-
-    const startbtn = domHandler("startbtn");
-    if(startbtn) {
-        addEvent(startbtn, "click", onClick);
-    }
-
-    const inputword = domHandler('inputword');
-    if(inputword) {
-        addEvent(inputword, "keydown", onKeyDown);
     }
 }

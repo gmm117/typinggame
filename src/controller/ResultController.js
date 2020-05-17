@@ -1,14 +1,21 @@
-import { RenderHtml, InitEvent  } from "../view/ResultView";
+import { RenderHtml, InitView  } from "../view/ResultView";
 
-function _init( _userlistner, html ) {
+let presenterlistner;
+
+function _init( _presenterlistner, html ) {
+    if(presenterlistner === undefined)
+        presenterlistner = _presenterlistner;
+
+    const { GetMatchLength, GetAvgTime } =  presenterlistner;
+
     RenderHtml(html);
-    InitEvent(_onRestart, _userlistner.GetMatchLength(), _userlistner.GetAvgTime());
+    InitView(_onRestart, GetMatchLength(), GetAvgTime());
 }
 
 function _onRestart() {
-    userlistner.ChangeReady();
+    presenterlistner.ChangeUrlReady();
 }
 
 export default {
     Init : _init
-}
+};

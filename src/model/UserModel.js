@@ -8,10 +8,6 @@ function _getTotalTime() {
     return UserDatas.reduce((acc, { second }) => acc + second, 0);
 };
 
-export function GetMatchLength( ) {
-    return UserDatas.filter( item => item.match === true ).length;
-};
-
 export function UserInit(serverDatas) {
     UserDatas = serverDatas.map(function(item) {
         return {
@@ -20,6 +16,24 @@ export function UserInit(serverDatas) {
             match: false
         }
     });
+};
+
+export function GetLength() {
+    return UserDatas.length;
+};
+
+export function GetAvgTime() {
+    const time = _getTotalTime();
+    const length = GetMatchLength();
+    if(time <= 0 || length <= 0) {
+        return 0;
+    }
+
+    return parseInt(time / length, 10);
+};
+
+export function GetMatchLength( ) {
+    return UserDatas.filter( item => item.match === true ).length;
 };
 
 export function GetText( idx ) {
@@ -65,16 +79,4 @@ export function GetExpire( idx ) {
 
 export function GetScore() {
     return UserDatas.filter( item => item.expire === false ).length;
-};
-
-export function GetLength() {
-    return UserDatas.length;
-};
-
-export function GetAvgTime() {
-    if(_getTotalTime() <= 0 || GetMatchLength() <= 0) {
-        return 0;
-    }
-
-    return parseInt(_getTotalTime() / GetMatchLength(), 10);
 };
