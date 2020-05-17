@@ -4,7 +4,6 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const MinifyHtmlWebpackPlugin = require('minify-html-webpack-plugin');
 
 module.exports = {
   // entry file
@@ -64,15 +63,6 @@ module.exports = {
           from: '**/*.html',
         }
       ]
-    }),
-    new MinifyHtmlWebpackPlugin({
-      src: './public/subhtml',
-      rules: {
-          collapseWhitespace: true,
-          removeAttributeQuotes: true,
-          removeComments: true,
-          minifyJS: true,
-      }
     })
   ]
 };
