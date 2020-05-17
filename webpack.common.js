@@ -66,7 +66,7 @@ module.exports = {
       ]
     }),
     new MinifyHtmlWebpackPlugin({
-      src: './dist',
+      src: './public/subhtml',
       rules: {
           collapseWhitespace: true,
           removeAttributeQuotes: true,
