@@ -8,15 +8,17 @@ const routes = {
   '/ready': function () {
     return _getURL('/ready.html')
       .then(function(res) {
-        presenterlistener.InitReady(res);
-        return true;
+        if(presenterlistener)
+          presenterlistener.InitReady(res);
+        return res;
       }); 
   },
   '/result': function () {
     return _getURL('/result.html')
       .then(function(res) {
-        presenterlistener.InitResult(res);
-        return true;
+        if(presenterlistener)
+          presenterlistener.InitResult(res);
+        return res;
       });
   },
   otherwise(path) {
@@ -60,7 +62,7 @@ export function SetListener(listener) {
 }
 
 export function ChangeUrl(url) {
-  window.open(url, '_self');
+   return window && window.open(url, '_self');
 }
 
 export default function Route(path, url) {

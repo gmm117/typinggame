@@ -15,6 +15,8 @@ module.exports = {
   },
   devServer: {
     contentBase: path.resolve("./dist"),
+    inline: true,
+    hot: true,
     index: "index.html",
     port: 9000
   },

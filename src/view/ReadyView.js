@@ -8,7 +8,7 @@ const PROBLEM_WORD_ID = 'problemword';
 
 let domHandler;
 
-function _getDomHandler() {
+function _getReadyDomHandler() {
     let remaintime, score, startbtn, inputword, problemword;
     return function(id) {
       switch(id) {
@@ -30,7 +30,7 @@ function _getDomHandler() {
 
 export function InitView( _onStart, _onCompare, _onKeyBlock ) {
     const onClick = e => {
-        const inputword = domHandler('inputword');
+        const inputword = domHandler ? domHandler(INPUT_WORD_ID) : _getReadyDomHandler()(INPUT_WORD_ID);
         inputword.focus();
         _onStart();
     };
@@ -46,55 +46,55 @@ export function InitView( _onStart, _onCompare, _onKeyBlock ) {
     };
 
     if(domHandler === undefined)
-        domHandler = _getDomHandler();
+        domHandler = _getReadyDomHandler();
 
-    const startbtn = domHandler("startbtn");
+    const startbtn = domHandler ? domHandler(START_BTN_ID) : _getReadyDomHandler()(START_BTN_ID);
     if(startbtn) {
         addEvent(startbtn, "click", onClick);
     }
 
-    const inputword = domHandler('inputword');
+    const inputword = domHandler ? domHandler(INPUT_WORD_ID) : _getReadyDomHandler()(INPUT_WORD_ID);
     if(inputword) {
         addEvent(inputword, "keydown", onKeyDown);
     }
 }
 
 
-export function RenderHtml(html) {
+export function RenderHtml( html ) {
     const root = document.getElementById('root');
     root.innerHTML = html;
 }
 
 export function RenderTime( _remainTime ) {
-    const remaintime = domHandler("remaintime");
+    const remaintime = domHandler ? domHandler(REMAIN_TIME_ID) : _getReadyDomHandler()(REMAIN_TIME_ID);
     if(remaintime) {
         remaintime.innerText = _remainTime;
     }
 }
 
 export function RenderScore( _score ) {
-    const score = domHandler("score");
+    const score = domHandler ? domHandler(SCORE_ID) : _getReadyDomHandler()(SCORE_ID);
     if(score) {
         score.innerText = _score;
     }
 }
 
 export function RenderText( _text ) {
-    const problemword = domHandler("problemword");
+    const problemword = domHandler ? domHandler(PROBLEM_WORD_ID) : _getReadyDomHandler()(PROBLEM_WORD_ID);
     if(problemword) {
         problemword.innerText = _text === undefined ? "문제 단어" : _text;
     }
 }
 
 export function RenderBtn( _bStartBtn ) {
-    const startbtn = domHandler("startbtn");
+    const startbtn = domHandler ? domHandler(START_BTN_ID) : _getReadyDomHandler()(START_BTN_ID);
     if(startbtn) {
         startbtn.innerText = _bStartBtn === true ? "시작" : "초기화";
     }
 }
 
-export function RenderResetInput( ) {
-    const inputword = domHandler("inputword");
+export function RenderResetInput() {
+    const inputword = domHandler ? domHandler(INPUT_WORD_ID) : _getReadyDomHandler()(INPUT_WORD_ID);
     if(inputword) {
         inputword.value = "";
     }
