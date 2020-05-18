@@ -44,7 +44,7 @@ $ npm run start
 * Cross platform
   - Windows, Mac
 * Browser
-  - IE11, Chrome, Safari, Edge, Whale ...
+  - IE11, Chrome, Safari, Edge, Firefox, Whale
 
 ## Credits
 This software uses the following open source packages:
