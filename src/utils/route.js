@@ -1,4 +1,4 @@
-var presenterlistener;
+var presenterlistener; // presenter listener
 
 /**
  * 라우팅을 위한 함수

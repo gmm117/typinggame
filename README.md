@@ -2,7 +2,7 @@
 - MVC 패턴적용
   - Model, View, Controller의 역할을 분명하게 나눠서 Model은 데이터만, View는 렌더링만, Controller는 모델과 뷰를 분리해서 처리하도록 구현
 
-- Presenter 기능적용
+- Presenter 적용
   - 게임준비/완료화면, 라우팅, 유저/서버 모델데이터를 유기적으로 연결해줄 수 있는 Presenter 객체 생성
   - 유기적으로 연결을 위해서 Presenter에서 각 모듈에게 리스너(callback)을 등록해서 처리
     - 하는이유: 모듈단위 연결하는 로직을 한군데로 몰아서 처리하면서 모듈간의 종속성을 제거가 가능
