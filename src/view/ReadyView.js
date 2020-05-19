@@ -6,8 +6,12 @@ const START_BTN_ID = 'startbtn';
 const INPUT_WORD_ID = 'inputword';
 const PROBLEM_WORD_ID = 'problemword';
 
-let domHandler;
+let domHandler; // _getReadyDomHandler의 클로저를 저장하는 객체
 
+/**
+ * ID 인덱스의 따라서 DOM element를 얻어오는 함수
+ * @param {id} id
+ */
 function _getReadyDomHandler() {
     let remaintime, score, startbtn, inputword, problemword;
     return function(id) {
@@ -27,7 +31,12 @@ function _getReadyDomHandler() {
       }
     };
 }
-
+/**
+ * 게임준비 화면의 DOM 초기화 함수
+ * @param {callback} _onStart 시작버튼이 눌릴경우 호출되는 callback
+ * @param {callback} _onCompare 서버에서 받아온 단어와 사용자가 입력한 단어를 비교하기 위한 callback
+ * @param {callback} _onKeyBlock 시작버튼이 누릴경우만 키 이벤트를 수신하기 위해서 호출하는 callback
+ */
 export function InitView( _onStart, _onCompare, _onKeyBlock ) {
     const onClick = e => {
         const inputword = domHandler ? domHandler(INPUT_WORD_ID) : _getReadyDomHandler()(INPUT_WORD_ID);
@@ -59,12 +68,19 @@ export function InitView( _onStart, _onCompare, _onKeyBlock ) {
     }
 }
 
-
+/**
+ * 라우터에서 받아온 게임준비 html을 렌더링 하기 위한 함수
+ * @param {string} html 게임준비 html
+ */
 export function RenderHtml( html ) {
     const root = document.getElementById('root');
     root.innerHTML = html;
 }
 
+/**
+ * 남은시간을 렌더링 하기 위한 함수
+ * @param {number} _remainTime 남은시간
+ */
 export function RenderTime( _remainTime ) {
     const remaintime = domHandler ? domHandler(REMAIN_TIME_ID) : _getReadyDomHandler()(REMAIN_TIME_ID);
     if(remaintime) {
@@ -72,6 +88,10 @@ export function RenderTime( _remainTime ) {
     }
 }
 
+/**
+ * 점수를 렌더링 하기 위한 함수
+ * @param {number} _score 점수
+ */
 export function RenderScore( _score ) {
     const score = domHandler ? domHandler(SCORE_ID) : _getReadyDomHandler()(SCORE_ID);
     if(score) {
@@ -79,6 +99,10 @@ export function RenderScore( _score ) {
     }
 }
 
+/**
+ * 단어를 렌더링 하기 위한 함수
+ * @param {string} _text 단어
+ */
 export function RenderText( _text ) {
     const problemword = domHandler ? domHandler(PROBLEM_WORD_ID) : _getReadyDomHandler()(PROBLEM_WORD_ID);
     if(problemword) {
@@ -86,6 +110,10 @@ export function RenderText( _text ) {
     }
 }
 
+/**
+ * 시간버튼을 렌더링 하기 위한 함수
+ * @param {boolean} _bStartBtn 시간/초기화 버튼 flag
+ */
 export function RenderBtn( _bStartBtn ) {
     const startbtn = domHandler ? domHandler(START_BTN_ID) : _getReadyDomHandler()(START_BTN_ID);
     if(startbtn) {
@@ -93,6 +121,9 @@ export function RenderBtn( _bStartBtn ) {
     }
 }
 
+/**
+ * 입력태그를 초기화 하기 위한 함수
+ */
 export function RenderResetInput() {
     const inputword = domHandler ? domHandler(INPUT_WORD_ID) : _getReadyDomHandler()(INPUT_WORD_ID);
     if(inputword) {

@@ -1,5 +1,9 @@
 var presenterlistener;
 
+/**
+ * 라우팅을 위한 함수
+ * @param {string} url
+ */
 const routes = {
   '/': function (url) {
     return _getURL(url)
@@ -26,6 +30,10 @@ const routes = {
   }
 };
 
+/**
+ * url을 통해서 데이터를 수신받기 위한 함수
+ * @param {string} url
+ */
 function _getURL(url) {
   return new Promise((resolve, reject) => {
     const req = new XMLHttpRequest();
@@ -41,6 +49,10 @@ function _getURL(url) {
   });
 }
 
+/**
+ * 라우팅 이벤트를 수신한다.
+ * @param {HashChangeEvent} event
+ */
 function _locationrouter(event) {
   const { href, origin } = location;
   let path = href.replace(origin, '');
@@ -57,14 +69,27 @@ if (window.onpopstate != null) {
 export const READY_URL = '/#ready';
 export const RESULT_URL = '/#result';
 
+/**
+ * presenter의 리스너를 세팅하기 위한 함수(route-presenter-controller 연결)
+ * @param {function} listener
+ */
 export function SetListener(listener) {
   presenterlistener = listener;
 }
 
+/**
+ * 라우터를 통해서 url을 변경하기 위한 함수
+ * @param {string} url
+ */
 export function ChangeUrl(url) {
    return window && window.open(url, '_self');
 }
 
+/**
+ * path, url을 통해서 routers 라우팅을 위임하는 함수
+ * @param {string} path
+ * @param {string} url
+ */
 export default function Route(path, url) {
   path = path.replace('#', '');
   if(routes[path]) {

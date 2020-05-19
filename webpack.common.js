@@ -51,7 +51,8 @@ module.exports = {
     new HtmlWebPackPlugin({
       title : 'Typing Game',
       filename: 'index.html', // output으로 출력할 파일은 index.html 이다.
-      template :  path.resolve(__dirname, 'public', 'index.html')
+      template: path.resolve(__dirname, 'public', 'index.html'),
+      favicon: path.resolve(__dirname, 'public', 'favicon.ico')
     }),
     new MiniCssExtractPlugin({
       filename: '[hash].css'
