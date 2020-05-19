@@ -1,5 +1,6 @@
 import { RenderHtml, RenderTime, RenderScore, RenderBtn, RenderResetInput, RenderText, InitView } from "../view/ReadyView";
 import RDModel from "../model/ReadyModel";
+import { SetGameComplete } from "../model/UserModel";
 
 let presenterlistner;
 
@@ -29,11 +30,13 @@ function _onCompare({ value }) {
 
 async function _start() {
     const { GetLength, ChangeUrlResult } =  presenterlistner;
+
     for(let i=0; i< GetLength(); i++) {
         RDModel.SetCurIdx(i);
         await asyncIntervalCaller(i);
     }
 
+    SetGameComplete(true);
     ChangeUrlResult();
 }
 
@@ -76,6 +79,8 @@ function _init( _presenterlistner, html ) {
         presenterlistner = _presenterlistner;
 
     const { GetLength } =  presenterlistner;
+    SetGameComplete(false);
+    
     if(GetLength() > 0) {
         RenderHtml(html);
         InitView(_onStart, _onCompare, RDModel.OnKeyBlock);

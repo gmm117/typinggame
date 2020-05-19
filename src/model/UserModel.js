@@ -1,4 +1,5 @@
 let UserDatas = [];
+let isComplete = false;
 
 function _getData( idx ) {
     return UserDatas.filter( item => item.idx === idx );
@@ -80,3 +81,11 @@ export function GetExpire( idx ) {
 export function GetScore() {
     return UserDatas.filter( item => item.expire === false ).length;
 };
+
+export function IsGameComplete() {
+    return isComplete;
+}
+
+export function SetGameComplete(_isComplete) {
+    isComplete = _isComplete;
+}

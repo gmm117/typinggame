@@ -1,4 +1,6 @@
 import { RenderHtml, InitView  } from "../view/ResultView";
+import { IsGameComplete } from "../model/UserModel";
+import RSModel from "../model/ResultModel";
 
 let presenterlistner;
 
@@ -9,7 +11,15 @@ function _init( _presenterlistner, html ) {
     const { GetMatchLength, GetAvgTime } =  presenterlistner;
 
     RenderHtml(html);
-    InitView(_onRestart, GetMatchLength(), GetAvgTime());
+    
+    const isComplate = IsGameComplete();
+    const score = isComplate ? GetMatchLength() : RSModel.GetScore();
+    const avg = isComplate ? GetAvgTime() : RSModel.GetAvg();
+
+    RSModel.SetScore(score);
+    RSModel.SetAvg(avg);
+
+    InitView(_onRestart, score, avg);
 }
 
 function _onRestart() {
