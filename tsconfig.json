@@ -1,0 +1,19 @@
+{
+    "include": [
+      "index.ts", "src/**/*.ts"
+    ],
+    "exclude": [
+      "node_modules",
+    ],
+    "compilerOptions": {
+      "rootDir" : "src",
+      "target": "es5", // 컴파일 후 변환될 ECMA스크립트 버전
+      "module": "commonjs", // 모듈의 형식을 지정
+      "sourceMap": false, // typescript 파일을 개발자 디버거파일에 노출
+      "removeComments": true, // ts 추가한 주석은 js에 반영안됨
+      "strict": true, // true이면 엄격한 타입 검사 모드를 활성화 한다.
+      "noImplicitAny": true // any 타임으로 암묵적 형 변환 여부를 결정, 기본 : false
+                              // false : type을 지정하지 않으면 any 타입이 붙습니다
+                              // true : type을 지정하지 않으면 컴파일시 에러가 납니다.
+    }
+  }

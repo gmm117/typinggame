@@ -4,13 +4,13 @@ import RSController from './controller/ResultController';
 import { InitServerData, GetServerDatas } from "./model/ServerModel";
 import { UserInit, SetTime, GetTime, SetExpire, GetExpire, GetScore, GetText, GetLength, GetMatch, SetMatch, GetAvgTime, GetMatchLength } from "./model/UserModel";
 
-let presenterlistner;
+let presenterlistner: any;
 
 /**
  * 게임준비 화면을 로딩하기 위한 초기화 함수
  * @param {string} html 게임준비 화면 html
  */
-function _initReady(html) {
+function _initReady(html: string): void {
     UserInit(GetServerDatas());
 
     RDController.Init(presenterlistner, html);
@@ -20,28 +20,28 @@ function _initReady(html) {
  * 게임완료 화면을 로딩하기 위한 초기화 함수
  * @param {string} html 게임완료 화면 html
  */
-function _initResult(html) {
+function _initResult(html: string): void {
     RSController.Init(presenterlistner, html);
 }
 
 /**
  * 게임준비 화면으로 라우팅 하기 위한 함수
  */
-function _changeUrlReady() {
+function _changeUrlReady(): Window | null {
     return ChangeUrl(READY_URL);
 }
 
 /**
  * 게임완료 화면으로 라우팅 하기 위한 함수
  */
-function _changeUrlResult() {
+function _changeUrlResult(): Window | null {
     return ChangeUrl(RESULT_URL);
 }
 
 /**
  * Presenter 리스너 생성(model,view,controller,route에 전달을 위한 리스너생성)
  */
-function Initialize() {
+function Initialize(): void {
     presenterlistner = { 
         Init: function() {
             UserInit(GetServerDatas());
@@ -68,12 +68,12 @@ function Initialize() {
 
 /**
  * Presenter 초기화 함수(서버에 데이터 수신, 준비화면 라우팅)
- * @param {string} url 서버 url
+ * @param {string} _url 서버 url
 */
-export function init(url) {
-    Route('/', url)
-        .then(res => InitServerData(JSON.parse(res)))
-        .then(function(res) {
+export function init(_url: string): void {
+    Route('/', _url)
+        .then((res: any) => InitServerData(JSON.parse(res)))
+        .then(function(res: boolean) {
             Initialize();
             if(location.hash === '#ready') {
                 Route('/ready');
@@ -81,5 +81,5 @@ export function init(url) {
                 _changeUrlReady();
             }
         })
-        .catch(res => alert("status : " + res.status + (res.responseURL ? "\n" + "responseURL : " + res.responseURL : "")));
+        .catch((res: any) => alert("status : " + res.status + (res.responseURL ? "\n" + "responseURL : " + res.responseURL : "")));
 }

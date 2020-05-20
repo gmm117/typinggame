@@ -51,6 +51,7 @@ This software uses the following open source packages:
 - [babel](https://babeljs.io/)
 - [npm](https://www.npmjs.com/)
 - [jest](https://jestjs.io/)
+- [typescript](https://www.typescriptlang.org/)
 - [webpack](https://webpack.js.org/)
 - [webpack-dev-server](https://webpack.js.org/configuration/dev-server/)
 

@@ -5,12 +5,12 @@
  * @param {callback} cb 콜백함수
  * @param {boolean} isCapture 캡쳐링여부
  */
-export function addEvent(element, eventName, cb, isCapture) { 
-    if (window.addEventListener) { 
+export function addEvent(element: any, eventName: string, cb: any, isCapture: boolean = false): void { 
+    if (element.addEventListener) { 
         element.addEventListener(eventName, cb, isCapture); 
-    } else if (window.attachEvent) { 
+    } else if (element.attachEvent) { 
         element.attachEvent("on" + eventName, cb); 
     } else { 
         element["on" + eventName] = cb; 
-    } 
+    }  
 }

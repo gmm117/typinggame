@@ -2,12 +2,28 @@
   "name": "typinggame",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "jest test --watch --runInBand --detectOpenHandles",
     "build": "webpack --config webpack.prod.js",
     "dev": "webpack --config webpack.dev.js",
     "start": "npm run dev && webpack-dev-server --open --watch"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "testRegex": "\\.test\\.ts$",
+    "moduleFileExtensions": [
+      "ts", "js"
+    ],
+    "globals": {
+      "ts-jest": {
+        "diagnostics": {
+          "pathRegex": "\\.(spec|test)\\.ts$"
+        }
+      }
+    }
   },
   "keywords": [],
   "author": "",
@@ -17,6 +33,8 @@
     "@babel/core": "^7.9.6",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-env": "^7.9.6",
+    "@babel/preset-typescript": "^7.9.0",
+    "@types/jest": "^25.2.3",
     "babel-loader": "^8.1.0",
     "babel-polyfill": "^6.26.0",
     "clean-webpack-plugin": "^3.0.0",
@@ -27,6 +45,9 @@
     "jest": "^26.0.1",
     "mini-css-extract-plugin": "^0.9.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "ts-jest": "^26.0.0",
+    "ts-loader": "^7.0.4",
+    "typescript": "^3.9.2",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.11.0",

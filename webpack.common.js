@@ -7,7 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   // entry file
-  entry: ['babel-polyfill', './index.js'],
+  entry: ['babel-polyfill', './index.ts'],
   // 컴파일 + 번들링된 js 파일이 저장될 경로와 이름 지정
   output: {
     filename: "[name].[hash].js",
@@ -20,14 +20,17 @@ module.exports = {
     index: "index.html",
     port: 9000
   },
+  resolve: {
+    extensions: ['*', '.js', '.ts'],
+  },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|ts)$/,
         use: {
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/preset-env'],
+              presets: ['@babel/preset-env',  "@babel/preset-typescript"],
               plugins: ['@babel/plugin-proposal-class-properties']
             }
         }
