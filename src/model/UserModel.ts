@@ -20,7 +20,7 @@ let isComplete: boolean = false; // 게임완료 여부
  * @param {number} idx
  * @return {Object}
  */
-function _getData( idx: number ): UserData[] | [] {
+function _getData( idx: number ): UserData[] {
     return UserDatas.filter( item => item.idx === idx );
 };
 
@@ -82,7 +82,7 @@ export function GetMatchLength(): number {
  * @return {text} text
  */
 export function GetText( idx: number ): string {
-    const data = _getData(idx);
+    const data: UserData[] = _getData(idx);
     return data.length > 0 ? data[0].text : ""; 
 };
 
@@ -92,7 +92,7 @@ export function GetText( idx: number ): string {
  * @return {boolean} match
  */
 export function GetMatch( idx: number ): boolean {
-    const data = _getData(idx);
+    const data: UserData[] = _getData(idx);
     return data.length > 0 ? data[0].match : false; 
 };
 
@@ -114,7 +114,7 @@ export function SetMatch( idx: number, match: boolean ): void {
  * @return {number} second
  */
 export function GetTime( idx: number ): number {
-    const data = _getData(idx);
+    const data: UserData[] = _getData(idx);
     return data.length > 0 ? data[0].second : 0; 
 };
 
@@ -136,7 +136,7 @@ export function SetTime( idx: number, second: number ): void {
  * @return {boolean} expire
  */
 export function GetExpire( idx: number ): boolean {
-    const data = _getData(idx);
+    const data: UserData[] = _getData(idx);
     return data.length > 0 ? data[0].expire : false;
 };
 

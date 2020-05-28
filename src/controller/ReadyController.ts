@@ -28,7 +28,7 @@ function _onStart(): void {
  */
 function _onCompare({ value }: any): void {
     const { GetText, SetMatch } =  presenterlistner;
-    const idx = RDModel.GetCurIdx();
+    const idx: number = RDModel.GetCurIdx();
     if(value === GetText(idx)) {
         SetMatch(idx, true);
         RenderResetInput();
@@ -64,7 +64,7 @@ function asyncIntervalGameCaller(_idx: number): Promise<void> {
     RenderScore(GetScore());
 
     return new Promise((resolve, reject) => {
-        const timeid = window.setInterval(function () {
+        const timeid: number = window.setInterval(function () {
             if(second <= 0 || GetMatch(_idx)) {
                 if(second <= 0)
                     SetExpire(_idx, true);

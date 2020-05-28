@@ -43,7 +43,7 @@ function _changeUrlResult(): Window | null {
  */
 function Initialize(): void {
     presenterlistner = { 
-        Init: function() {
+        Init: function(): void {
             UserInit(GetServerDatas());
         },
         SetTime,
