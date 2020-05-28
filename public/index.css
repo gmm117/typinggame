@@ -13,12 +13,6 @@ main {
     margin: 0 auto;
 }
 
-.root {
-    width: 250px;
-    height: 200px;
-    box-sizing: border-box;
-}
-
 /* common css */
 
 .contentbtn {
