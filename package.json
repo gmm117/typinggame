@@ -26,7 +26,12 @@
       }
     }
   },
-  "keywords": [],
+  "keywords": [
+    "typescript",
+    "jest",
+    "webpack",
+    "babel"
+  ],
   "author": "gmm117",
   "license": "ISC",
   "devDependencies": {
