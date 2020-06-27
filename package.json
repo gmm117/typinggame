@@ -27,7 +27,7 @@
     }
   },
   "keywords": [],
-  "author": "",
+  "author": "gmm117",
   "license": "ISC",
   "devDependencies": {
     "@babel/cli": "^7.8.4",
