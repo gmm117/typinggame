@@ -6,13 +6,13 @@ import { UserInit, GetLength, GetText, GetTime, GetMatchLength, GetMatch, GetExp
 describe("ServerModel UnitTest",
     function () {
         it("ServerModel InitServerData/GetServerDatas function test", () => {
-            expect(Route('/', 'https://my-json-server.typicode.com/kakaopay-fe/resources/words').then( (res: any) => InitServerData(res) && GetServerDatas())).resolves.toEqual(true);
+            expect(Route('/', atob('aHR0cHM6Ly9teS1qc29uLXNlcnZlci50eXBpY29kZS5jb20va2FrYW9wYXktZmUvcmVzb3VyY2VzL3dvcmRz')).then( (res: any) => InitServerData(res) && GetServerDatas())).resolves.toEqual(true);
         });
 });
 
 describe("UserModel UnitTest", () => {
     it("UserModel UserInit/GetLength function test", () => {
-        expect(Route('/', 'https://my-json-server.typicode.com/kakaopay-fe/resources/words').then( (res: any) => {
+        expect(Route('/', atob('aHR0cHM6Ly9teS1qc29uLXNlcnZlci50eXBpY29kZS5jb20va2FrYW9wYXktZmUvcmVzb3VyY2VzL3dvcmRz')).then( (res: any) => {
             UserInit(JSON.parse(res));
             return GetLength();
         })).resolves.toBeGreaterThan(0);

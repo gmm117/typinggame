@@ -4,7 +4,7 @@ import { init } from './src/presenter';
 
 
 try {
-    init('https://my-json-server.typicode.com/kakaopay-fe/resources/words');
+    init(atob('aHR0cHM6Ly9teS1qc29uLXNlcnZlci50eXBpY29kZS5jb20va2FrYW9wYXktZmUvcmVzb3VyY2VzL3dvcmRz'));
 } catch (e) {
     console.error(e);
 }

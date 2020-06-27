@@ -5,7 +5,7 @@ describe("utils UnitTest",
     function () {
         
         it("Route / Promise test", () => {
-            expect(Route('/', 'https://my-json-server.typicode.com/kakaopay-fe/resources/words').then((res: any) => res.length)).resolves.toEqual(12);
+            expect(Route('/', atob('aHR0cHM6Ly9teS1qc29uLXNlcnZlci50eXBpY29kZS5jb20va2FrYW9wYXktZmUvcmVzb3VyY2VzL3dvcmRz')).then((res: any) => res.length)).resolves.toEqual(12);
         });
 
         it("Route / ChangeUrl import test", () => {
